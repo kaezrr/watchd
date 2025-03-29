@@ -3,17 +3,15 @@ const movieController = require("../controllers/movieController");
 
 const movieRouter = Router();
 
-movieRouter.get("/", movieController.showAllMovies);
-movieRouter.get("/categories", movieController.showCategories);
-movieRouter.get("/directors", movieController.showDirectors);
-
-movieRouter.get("/search", movieController.searchMovieGet);
-movieRouter.post("/delete", movieController.deleteMoviePost);
-
 movieRouter.get("/create", movieController.createMoviePost);
 movieRouter.post("/create", movieController.createMovieGet);
 
-movieRouter.get("/update", movieController.updateMovieGet);
-movieRouter.post("/update", movieController.updateMoviePost);
+movieRouter.get("/", movieController.showMovies);
+movieRouter.get("/search", movieController.searchMovies);
+
+movieRouter.get("/:id/update", movieController.updateMovieGet);
+movieRouter.post("/:id/update", movieController.updateMoviePost);
+
+movieRouter.post("/:id/delete", movieController.deleteMovie);
 
 module.exports = movieRouter;

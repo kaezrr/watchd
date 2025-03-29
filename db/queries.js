@@ -95,15 +95,30 @@ async function searchDirectors(id) {
   return rows;
 }
 
+async function getAllGenres() {
+  const { rows } = await db.query(`SELECT * FROM genres`);
+  return rows;
+}
+
+async function getAllDirectors() {
+  const { rows } = await db.query(`SELECT * FROM directors`);
+  return rows;
+}
+
 module.exports = {
   insertGenre,
   insertDirector,
   insertMovie,
+
   searchMovie,
   searchGenres,
   searchDirectors,
-  getAllMovies,
+
   deleteGenre,
   deleteMovie,
   deleteDirector,
+
+  getAllMovies,
+  getAllGenres,
+  getAllDirectors,
 };

@@ -1,29 +1,30 @@
-async function showAllMovies(res, req) {}
+const db = require("../db/queries");
 
-async function showCategories(res, req) {}
+async function showMovies(req, res) {
+  res.send(await db.getAllMovies());
+}
 
-async function showDirectors(res, req) {}
+async function searchMovies(req, res) {}
 
-async function searchMovieGet(res, req) {}
+async function updateMovieGet(req, res) {}
 
-async function updateMovieGet(res, req) {}
+async function updateMoviePost(req, res) {}
 
-async function updateMoviePost(res, req) {}
+async function deleteMovie(req, res) {}
 
-async function deleteMoviePost(res, req) {}
+async function createMovieGet(req, res) {}
 
-async function createMovieGet(res, req) {}
-
-async function createMoviePost(res, req) {}
+async function createMoviePost(req, res) {}
 
 module.exports = {
-  showAllMovies,
-  showCategories,
-  showDirectors,
-  searchMovieGet,
-  updateMovieGet,
-  updateMoviePost,
-  deleteMoviePost,
   createMoviePost,
   createMovieGet,
+
+  showMovies,
+  searchMovies,
+
+  updateMovieGet,
+  updateMoviePost,
+
+  deleteMovie,
 };
