@@ -76,10 +76,19 @@ async function searchMovie(title, director, genre) {
 
 async function searchGenres(id) {
   const { rows } = await db.query(
-    `SELECT m.id, m.title, m.release_year, m.rating FROM movies m
-     JOIN movies_genres mg ON mg.movie_id = m.id
-     JOIN genres g ON g.id = mg.genre_id
-     WHERE g.id = $1;`,
+    `SELECT m.id, 
+     m.title,
+     m.release_year,
+     m.rating,
+     d.name AS director,
+     STRING_AGG(g.name, ', ') AS genres
+     FROM movies m 
+     JOIN directors d ON m.director_id=d.id
+     JOIN movies_genres mg ON mg.movie_id=m.id
+     JOIN genres g ON g.id=mg.genre_id
+     WHERE g.id = $1
+     GROUP BY m.id, m.title, m.release_year, m.rating, d.name
+     ORDER BY m.id;`,
     [id],
   );
   return rows;
@@ -87,9 +96,19 @@ async function searchGenres(id) {
 
 async function searchDirectors(id) {
   const { rows } = await db.query(
-    `SELECT m.id, m.title, m.release_year, m.rating FROM movies m
-     JOIN directors d ON m.director_id = d.id
-     WHERE d.id = $1;`,
+    `SELECT m.id, 
+     m.title,
+     m.release_year,
+     m.rating,
+     d.name AS director,
+     STRING_AGG(g.name, ', ') AS genres
+     FROM movies m 
+     JOIN directors d ON m.director_id=d.id
+     JOIN movies_genres mg ON mg.movie_id=m.id
+     JOIN genres g ON g.id=mg.genre_id
+     WHERE d.id = $1
+     GROUP BY m.id, m.title, m.release_year, m.rating, d.name
+     ORDER BY m.id;`,
     [id],
   );
   return rows;

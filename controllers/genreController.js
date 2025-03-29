@@ -5,7 +5,10 @@ async function showGenres(req, res) {
   res.render("genre", { title: "Genres List", genres });
 }
 
-async function searchGenres(req, res) {}
+async function searchGenres(req, res) {
+  const movies = await db.searchGenres(req.params.id);
+  res.render("index", { title: "Movies by Genre", movies });
+}
 
 async function updateGenreGet(req, res) {}
 

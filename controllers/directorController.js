@@ -5,7 +5,10 @@ async function showDirectors(req, res) {
   res.render("director", { title: "Directors List", directors });
 }
 
-async function searchDirectors(req, res) {}
+async function searchDirectors(req, res) {
+  const movies = await db.searchDirectors(req.params.id);
+  res.render("index", { title: "Movies by Director", movies });
+}
 
 async function updateDirectorGet(req, res) {}
 
