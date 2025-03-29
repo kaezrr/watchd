@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS movies(
   title VARCHAR(255) NOT NULL,
   release_year INTEGER NOT NULL,
   rating FLOAT NOT NULL,
-  director_id INTEGER REFERENCES directors (id)
+  director_id INTEGER REFERENCES directors (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS movies_genres(
