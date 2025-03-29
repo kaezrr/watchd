@@ -1,7 +1,8 @@
 const db = require("../db/queries");
 
 async function showDirectors(req, res) {
-  res.send(await db.getAllDirectors());
+  const directors = await db.getAllDirectors();
+  res.render("director", { title: "Directors List", directors });
 }
 
 async function searchDirectors(req, res) {}

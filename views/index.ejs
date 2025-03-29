@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title><%= title %></title>
+</head>
+<body>
+        <%- include("partials/navbar", {url: ""}) %>
+    <h1><%= title %></h1>
+    <% movies.forEach(movie => { %>
+    <div class="movie-container">
+        <h2><%= movie.title %></h2>
+        <div class="links">
+            <a href="/<%=movie.id%>/update">
+                <button>Update</button>
+            </a>
+            <a href="/<%=movie.id%>/delete">
+                <button>Delete</button>
+            </a>
+        </div>
+        <p> Released in <%= movie.release_year %></p>
+        <p> Rated <%= movie.rating %>/10</p>
+        <p> Directed by <%= movie.director %></p>
+        <p> Genres: <%= movie.genres %></p>
+    </div>
+    <%})%>
+</body>
+</html>

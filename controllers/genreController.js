@@ -1,7 +1,8 @@
 const db = require("../db/queries");
 
 async function showGenres(req, res) {
-  res.send(await db.getAllGenres());
+  const genres = await db.getAllGenres();
+  res.render("genre", { title: "Genres List", genres });
 }
 
 async function searchGenres(req, res) {}
