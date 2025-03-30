@@ -3,6 +3,7 @@ const path = require("node:path");
 const movieRouter = require("./routes/movieRouter");
 const genreRouter = require("./routes/genreRouter");
 const directorRouter = require("./routes/directorRouter");
+const authRouter = require("./routes/authRouter");
 
 const App = express();
 App.set("view engine", "ejs");
@@ -12,6 +13,7 @@ App.use(express.urlencoded({ extended: true }));
 App.use("/", movieRouter);
 App.use("/genres", genreRouter);
 App.use("/directors", directorRouter);
+App.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 3000;
 App.listen(PORT, () => console.log(`App is listening on port ${PORT}...`));

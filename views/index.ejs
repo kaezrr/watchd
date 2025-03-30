@@ -16,10 +16,10 @@
     <div class="movie-container">
         <h2><%= movie.title %></h2>
         <div class="links">
-            <a href="/<%=movie.id%>/update">
+            <a href="auth?base=&action=update&id=<%=movie.id%>">
                 <button>Update</button>
             </a>
-            <a href="/<%=movie.id%>/delete">
+            <a href="auth?base=&action=delete&id=<%=movie.id%>">
                 <button>Delete</button>
             </a>
         </div>

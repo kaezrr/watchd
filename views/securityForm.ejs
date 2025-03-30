@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Authentication</title>
+</head>
+<body>
+    <%- include("partials/navbar", {url: ""}) %>
+    <h1>Enter admin password to perform this action</h1>
+    <% if(locals.errors) {%>
+        <p><%=errors%></p>
+    <%}%>
+    <form action="/auth?base=<%=base%>&action=<%=action%>&id=<%=id%>" method="post">
+        <label for="name">Password</label>
+        <input type="password" id="pass" name="pass" required>
+        <button>Submit</button>
+    </form>
+</body>
+</html>
+
