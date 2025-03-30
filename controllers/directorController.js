@@ -43,7 +43,7 @@ async function deleteDirector(req, res) {
 }
 
 async function createDirectorGet(req, res) {
-  res.render("directorForm", { title: "Add a new director" });
+  res.render("directorForm", { title: "Add a new director", url: "create" });
 }
 
 async function createDirectorPost(req, res) {
