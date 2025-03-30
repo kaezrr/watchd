@@ -53,6 +53,7 @@ async function createGenrePost(req, res) {
   } catch {
     res.render("genreForm", {
       title: "Add a new genre",
+      url: "create",
       errors: "Genre name already exists!",
     });
   }
