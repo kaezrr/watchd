@@ -15,9 +15,59 @@ async function searchMoviesPost(req, res) {
   res.render("index", { title: "Search results", movies });
 }
 
-async function updateMovieGet(req, res) {}
+async function updateMovieGet(req, res) {
+  const id = req.params.id;
+  const movie = await db.getMovie(id);
+  movie.genres = await db.getMovieGenres(id);
+  const directors = await db.getAllDirectors();
+  const genres = await db.getAllGenres();
+  res.render("movieForm", {
+    title: "Update movie",
+    data: movie,
+    directors,
+    genres,
+    url: `${id}/update`,
+  });
+}
 
-async function updateMoviePost(req, res) {}
+async function updateMoviePost(req, res) {
+  const id = req.params.id;
+  const { name, year, rating, director, genre } = req.body;
+  if (!genre) {
+    const movie = await db.getMovie(id);
+    movie.genres = await db.getMovieGenres(id);
+    const directors = await db.getAllDirectors();
+    const genres = await db.getAllGenres();
+    res.render("movieForm", {
+      title: "Update movie",
+      data: movie,
+      directors,
+      genres,
+      url: `${id}/update`,
+      errors: "Must select atleast 1 genre!",
+    });
+    return;
+  }
+
+  try {
+    await db.updateMovie(id, name, year, rating, director);
+    await db.updateMovieGenres(id, genre);
+    res.redirect("/");
+  } catch {
+    const movie = await db.getMovie(id);
+    movie.genres = await db.getMovieGenres(id);
+    const directors = await db.getAllDirectors();
+    const genres = await db.getAllGenres();
+    res.render("movieForm", {
+      title: "Update movie",
+      data: movie,
+      directors,
+      genres,
+      url: `${id}/update`,
+      errors: "Movie already exists!",
+    });
+  }
+}
 
 async function deleteMovie(req, res) {
   await db.deleteMovie(req.params.id);
@@ -27,7 +77,12 @@ async function deleteMovie(req, res) {
 async function createMovieGet(req, res) {
   const directors = await db.getAllDirectors();
   const genres = await db.getAllGenres();
-  res.render("movieForm", { title: "Add a new movie!", directors, genres });
+  res.render("movieForm", {
+    title: "Add a new movie!",
+    directors,
+    genres,
+    url: "create",
+  });
 }
 
 async function createMoviePost(req, res) {
@@ -39,6 +94,7 @@ async function createMoviePost(req, res) {
       title: "Add a new movie!",
       directors,
       genres,
+      url: "create",
       errors: "Must select atleast 1 genre",
     });
     return;
@@ -55,6 +111,7 @@ async function createMoviePost(req, res) {
       title: "Add a new movie!",
       directors,
       genres,
+      url: "create",
       errors: "Movie already exists!",
     });
   }

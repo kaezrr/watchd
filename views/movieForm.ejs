@@ -12,24 +12,25 @@
     <% if(locals.errors) {%>
         <p><%=errors%></p>
     <%}%>
-    <form action="/create" method="post">
+    <form action="/<%= url %>" method="post">
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" required>
+        <input type="text" name="name" id="name"<% if(locals.data) { %> value="<%=data.title%>"<%}%> required>
         <label for="year">Release Year</label>
-        <input type="number" name="year" id="year" required>
+        <input type="number" name="year" id="year"<% if(locals.data) { %> value="<%=data.release_year%>"<%}%> required>
         <label for="rating">Rating</label>
-        <input type="number" name="rating" id="rating" step="0.1" min="0" max="10" required>
+        <input type="number" name="rating" id="rating" step="0.1" min="0" max="10" <% if(locals.data) { %> value="<%=data.rating%>"<%}%>required>
         <label for="director">Director</label>
         <select name="director" id="director">
                 <% directors.forEach(director => { %>
-                <option value="<%= director.id %>"><%=director.name%></option>
+                <option value="<%= director.id %>"<% if(locals.data && director.id===data.director_id) { %> selected <%}%>><%=director.name%></option>
                 <%})%>
         </select>
         <fieldset>
         <legend>Select appropriate genres</legend>
                 <% genres.forEach(genre => { %>
                 <div>
-                <input type="checkbox" id="<%= genre.name %>" name="genre" value="<%= genre.id %>"/>
+                <input type="checkbox" id="<%= genre.name %>" name="genre" value="<%= genre.id %>" 
+<% if(locals.data && data.genres.includes(genre.id)) { %> checked <%}%> />
                 <label for="<%= genre.name %>"><%= genre.name %></label>
                 </div>
                 <%})%>

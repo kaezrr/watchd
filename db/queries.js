@@ -13,6 +13,26 @@ async function updateDirector(id, name, birth, nation) {
   );
 }
 
+async function updateMovie(id, name, year, rating, director) {
+  await db.query(
+    `UPDATE movies 
+     SET title=$1, release_year=$2, rating=$3, director_id=$4
+     WHERE id=$5`,
+    [name, year, rating, director, id],
+  );
+}
+
+async function updateMovieGenres(id, genre) {
+  if (typeof genre === "string") genre = [genre];
+  await db.query(`DELETE FROM movies_genres WHERE movie_id = $1`, [id]);
+  for (let g of genre) {
+    await db.query(
+      `INSERT INTO movies_genres (movie_id, genre_id) VALUES ($1, $2);`,
+      [id, g],
+    );
+  }
+}
+
 async function getMovie(id) {
   const { rows } = await db.query(`SELECT * FROM movies WHERE id=$1`, [id]);
   return rows[0];
@@ -26,6 +46,14 @@ async function getDirector(id) {
 async function getGenre(id) {
   const { rows } = await db.query(`SELECT * FROM genres WHERE id=$1`, [id]);
   return rows[0];
+}
+
+async function getMovieGenres(id) {
+  const { rows } = await db.query(
+    `SELECT genre_id FROM movies_genres WHERE movie_id=$1`,
+    [id],
+  );
+  return rows.map((row) => row.genre_id);
 }
 
 async function getAllMovies() {
@@ -77,6 +105,7 @@ async function insertMovie(title, release, rating, director_id) {
 }
 
 async function insertMovieGenre(name, genre) {
+  if (typeof genre === "string") genre = [genre];
   for (let g of genre) {
     await db.query(
       `INSERT INTO movies_genres (movie_id, genre_id) 
@@ -186,7 +215,10 @@ module.exports = {
   getMovie,
   getGenre,
   getDirector,
+  getMovieGenres,
 
   updateGenre,
   updateDirector,
+  updateMovie,
+  updateMovieGenres,
 };
