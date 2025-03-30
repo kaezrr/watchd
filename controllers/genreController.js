@@ -10,9 +10,31 @@ async function searchGenres(req, res) {
   res.render("index", { title: "Movies by Genre", movies });
 }
 
-async function updateGenreGet(req, res) {}
+async function updateGenreGet(req, res) {
+  const id = req.params.id;
+  const genre = await db.getGenre(id);
+  res.render("genreForm", {
+    title: "Update genre",
+    data: genre,
+    url: `${id}/update`,
+  });
+}
 
-async function updateGenrePost(req, res) {}
+async function updateGenrePost(req, res) {
+  const id = req.params.id;
+  try {
+    await db.updateGenre(id, req.body.name);
+    res.redirect("/genres");
+  } catch {
+    const genre = await db.getGenre(id);
+    res.render("genreForm", {
+      title: "Update genre",
+      data: genre,
+      url: `${id}/update`,
+      errors: "Genre name already exists!",
+    });
+  }
+}
 
 async function deleteGenre(req, res) {
   await db.deleteGenre(req.params.id);
@@ -20,7 +42,7 @@ async function deleteGenre(req, res) {
 }
 
 async function createGenreGet(req, res) {
-  res.render("genreForm", { title: "Add a new genre" });
+  res.render("genreForm", { title: "Add a new genre", url: "create" });
 }
 
 async function createGenrePost(req, res) {

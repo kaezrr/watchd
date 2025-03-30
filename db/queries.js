@@ -1,5 +1,33 @@
 const db = require("./pool");
 
+async function updateGenre(id, name) {
+  await db.query(`UPDATE genres SET name=$1 WHERE id=$2`, [name, id]);
+}
+
+async function updateDirector(id, name, birth, nation) {
+  await db.query(
+    `UPDATE directors 
+     SET name=$1, birth_year=$2, nationality=$3
+     WHERE id=$4`,
+    [name, birth, nation, id],
+  );
+}
+
+async function getMovie(id) {
+  const { rows } = await db.query(`SELECT * FROM movies WHERE id=$1`, [id]);
+  return rows[0];
+}
+
+async function getDirector(id) {
+  const { rows } = await db.query(`SELECT * FROM directors WHERE id=$1`, [id]);
+  return rows[0];
+}
+
+async function getGenre(id) {
+  const { rows } = await db.query(`SELECT * FROM genres WHERE id=$1`, [id]);
+  return rows[0];
+}
+
 async function getAllMovies() {
   const { rows } = await db.query(
     `SELECT m.id, 
@@ -154,4 +182,11 @@ module.exports = {
   getAllMovies,
   getAllGenres,
   getAllDirectors,
+
+  getMovie,
+  getGenre,
+  getDirector,
+
+  updateGenre,
+  updateDirector,
 };

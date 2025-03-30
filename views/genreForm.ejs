@@ -12,9 +12,9 @@
     <% if(locals.errors) {%>
         <p><%=errors%></p>
     <%}%>
-    <form action="/genres/create" method="post">
+    <form action="/genres/<%=url%>" method="post">
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" required>
+            <input type="text" name="name" id="name" <% if(locals.data) { %> value="<%=data.name%>"<%}%> required>
         <button>Submit</button>
     </form>
 </body>

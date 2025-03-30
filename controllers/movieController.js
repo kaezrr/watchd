@@ -6,7 +6,7 @@ async function showMovies(req, res) {
 }
 
 async function searchMoviesGet(req, res) {
-  res.render("searchForm", { title: "Fuzzy search movies!" });
+  res.render("searchForm", { title: "Fuzzy find movies!" });
 }
 
 async function searchMoviesPost(req, res) {

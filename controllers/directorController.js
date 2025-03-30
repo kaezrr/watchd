@@ -10,9 +10,32 @@ async function searchDirectors(req, res) {
   res.render("index", { title: "Movies by Director", movies });
 }
 
-async function updateDirectorGet(req, res) {}
+async function updateDirectorGet(req, res) {
+  const id = req.params.id;
+  const director = await db.getDirector(id);
+  res.render("directorForm", {
+    title: "Update director",
+    data: director,
+    url: `${id}/update`,
+  });
+}
 
-async function updateDirectorPost(req, res) {}
+async function updateDirectorPost(req, res) {
+  const id = req.params.id;
+  const { name, birth, nation } = req.body;
+  try {
+    await db.updateDirector(id, name, birth, nation);
+    res.redirect("/directors");
+  } catch {
+    const director = await db.getDirector(id);
+    res.render("directorForm", {
+      title: "Update director",
+      data: director,
+      url: `${id}/update`,
+      errors: "Director already exists!",
+    });
+  }
+}
 
 async function deleteDirector(req, res) {
   await db.deleteDirector(req.params.id);
