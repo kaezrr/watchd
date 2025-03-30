@@ -86,6 +86,9 @@ async function main() {
     username: PGUSER,
     password: PGPASSWORD,
     port: 5432,
+    ssl: {
+      require: true,
+    },
   });
   await client.connect();
   await client.query(SQL);
