@@ -12,6 +12,6 @@ genreRouter.get("/:id", genreController.searchGenres);
 genreRouter.get("/:id/update", genreController.updateGenreGet);
 genreRouter.post("/:id/update", genreController.updateGenrePost);
 
-genreRouter.post("/:id/delete", genreController.deleteGenre);
+genreRouter.get("/:id/delete", genreController.deleteGenre);
 
 module.exports = genreRouter;

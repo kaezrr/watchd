@@ -12,6 +12,6 @@ directorRouter.get("/:id", directorController.searchDirectors);
 directorRouter.get("/:id/update", directorController.updateDirectorGet);
 directorRouter.post("/:id/update", directorController.updateDirectorPost);
 
-directorRouter.post("/:id/delete", directorController.deleteDirector);
+directorRouter.get("/:id/delete", directorController.deleteDirector);
 
 module.exports = directorRouter;

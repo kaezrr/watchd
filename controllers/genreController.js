@@ -14,11 +14,27 @@ async function updateGenreGet(req, res) {}
 
 async function updateGenrePost(req, res) {}
 
-async function deleteGenre(req, res) {}
+async function deleteGenre(req, res) {
+  await db.deleteGenre(req.params.id);
+  res.redirect("/genres");
+}
 
-async function createGenreGet(req, res) {}
+async function createGenreGet(req, res) {
+  res.render("genreForm", { title: "Add a new genre" });
+}
 
-async function createGenrePost(req, res) {}
+async function createGenrePost(req, res) {
+  const { name } = req.body;
+  try {
+    await db.insertGenre(name);
+    res.redirect("/genres");
+  } catch {
+    res.render("genreForm", {
+      title: "Add a new genre",
+      errors: "Genre name already exists!",
+    });
+  }
+}
 
 module.exports = {
   createGenrePost,

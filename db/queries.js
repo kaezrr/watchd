@@ -48,6 +48,19 @@ async function insertMovie(title, release, rating, director_id) {
   );
 }
 
+async function insertMovieGenre(name, genre) {
+  for (let g of genre) {
+    await db.query(
+      `INSERT INTO movies_genres (movie_id, genre_id) 
+       VALUES (
+       (SELECT id FROM movies WHERE title = $1),
+       $2
+       );`,
+      [name, g],
+    );
+  }
+}
+
 async function searchMovie(title, director, genre) {
   const titlePattern = title ? `%${title}%` : `%`;
   const directorPattern = director ? `%${director}%` : `%`;
@@ -128,6 +141,7 @@ module.exports = {
   insertGenre,
   insertDirector,
   insertMovie,
+  insertMovieGenre,
 
   searchMovie,
   searchGenres,

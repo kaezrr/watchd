@@ -14,11 +14,20 @@ async function updateDirectorGet(req, res) {}
 
 async function updateDirectorPost(req, res) {}
 
-async function deleteDirector(req, res) {}
+async function deleteDirector(req, res) {
+  await db.deleteDirector(req.params.id);
+  res.redirect("/directors");
+}
 
-async function createDirectorGet(req, res) {}
+async function createDirectorGet(req, res) {
+  res.render("directorForm", { title: "Add a new director" });
+}
 
-async function createDirectorPost(req, res) {}
+async function createDirectorPost(req, res) {
+  const { name, birth, nation } = req.body;
+  await db.insertDirector(name, birth, nation);
+  res.redirect("/directors");
+}
 
 module.exports = {
   createDirectorPost,
